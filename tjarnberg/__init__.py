@@ -32,5 +32,4 @@ def calcFracOutages(doc):
         if 'REPAIR' == outage.reason.cdata:
             counter = counter + 1
 
-    frac = float(counter)/nout
-    return frac
+    return counter, nout
