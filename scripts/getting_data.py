@@ -9,8 +9,8 @@ to disk and prints a number.
 """
 
 def main():
-    from tjarnberg import fetchNYCoutages
-    from tjarnberg import calcFracOutages
+    from tjarnberg.session2 import fetchNYCoutages
+    from tjarnberg.session2 import calcFracOutages
 
     doc = fetchNYCoutages()
     repairs, total = calcFracOutages(doc)
