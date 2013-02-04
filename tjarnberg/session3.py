@@ -33,6 +33,6 @@ class CourseRepo(object):
         """PASSes if repo checks out, FAILs if it does not"""
         for file in self.required:
             if not os.path.exists(file):
-                return "FAIL"
+                return False
 
-        return "PASS"
+        return True

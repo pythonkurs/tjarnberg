@@ -12,7 +12,10 @@ def main(argv):
 	repo = CourseRepo(lastname)
 
 	with repo_dir(workDir):
-		print repo.check()
+		if repo.check():
+			print "PASS"
+		else:
+			print "FAIL"
 
 
 
