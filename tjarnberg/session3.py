@@ -1,6 +1,6 @@
 import sys, os
 
-class ContextDir(object):
+class repo_dir(object):
     """Changeing directory within this context."""
     def __init__(self, workdir):
         self.curdir = os.getcwd()
@@ -17,25 +17,22 @@ class ContextDir(object):
 
 class CourseRepo(object):
     """Check repository structure in dir"""
-    def __init__(self,dir):
+    def __init__(self,lastname):
         if dir is "":
-            print("No directory give, using current directory")
-            dir = os.getcwd()
-
-        [workdir,lastname] = os.path.split(dir)
+            sys.stderr.write("No surname given.")
+            sys.exit(-1)
         self.surname = lastname
 
+
     @property
-    def surname(self,lastname):
-        self.required = (".git", "setup.py","README.md","scripts/getting_data.py","scripts/check_repo.py",lastname+"/__init__.py",lastname+"/session3.py")
+    def required(self):
+        return (".git", "setup.py","README.md","scripts/getting_data.py","scripts/check_repo.py",self.surname+"/__init__.py",self.surname+"/session3.py")
+
 
     def check(self):
         """PASSes if repo checks out, FAILs if it does not"""
-        for file in self.require:
-            if not os.path.exist(file):
-                retrun "FAIL"
+        for file in self.required:
+            if not os.path.exists(file):
+                return "FAIL"
 
-        retrun "PASS"
-
-    def print_repo(self):
-        print(self.required)
+        return "PASS"
