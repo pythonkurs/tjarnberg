@@ -21,12 +21,17 @@ class CourseRepo(object):
         if dir is "":
             sys.stderr.write("No surname given.")
             sys.exit(-1)
+
         self.surname = lastname
 
-
     @property
-    def required(self):
-        return (".git", "setup.py","README.md","scripts/getting_data.py","scripts/check_repo.py",self.surname+"/__init__.py",self.surname+"/session3.py")
+    def surname(self):
+        return self._surname
+
+    @surname.setter
+    def surname(self,lastname):
+        self._surname = lastname
+        self.required = (".git", "setup.py","README.md","scripts/getting_data.py","scripts/check_repo.py",self.surname+"/__init__.py",self.surname+"/session3.py")
 
 
     def check(self):

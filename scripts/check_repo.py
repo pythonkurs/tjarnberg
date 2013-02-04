@@ -8,8 +8,9 @@ def main(argv):
 	from tjarnberg.session3 import CourseRepo, repo_dir
 
 	workDir = argv
-	lastname = os.path.basename(workDir)
+	lastname = os.path.basename(os.path.normpath(workDir))
 	repo = CourseRepo(lastname)
+
 
 	with repo_dir(workDir):
 		if repo.check():
