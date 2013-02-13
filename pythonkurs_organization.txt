@@ -1,0 +1,27 @@
+* Workhabbits of members of the python course
+- Most common commit days and hours for class
+  'Wednesday' = 133,
+  'Tuesday'= 74
+  Hour 16 = 57
+  Hour 12 = 38
+
+- maximum number of commits for users = 30
+
+- Most common commit days and hours for me
+  'Monday', 5, 'Friday', 5
+  Hour 11, 5 
+  Hour 16, 4
+
+- Most common commit days and hours for alneberg, user with 30 commits:
+  'Wednesday', 26, 'Tuesday', 4
+  Hour 16, 15 
+  Hour 9, 6
+
+- Most common commit days and hours for hugerth, user with 30 commits:
+  'Wednesday', 18, 'Tuesday', 6
+  Hour 16, 18
+  Hour 12, 9
+
+* Conclusion
+  Wednsday and tuesday are popular days to commit.
+  I work a bit differently.
