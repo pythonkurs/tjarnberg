@@ -4,16 +4,20 @@
 
 def main():
     """Informative description"""
-    import getpass
+    import getpass, datetime
     from tjarnberg.session4 import orgRepoCommits
+    from collections import Counter
 
     user = raw_input('Github username: ')
     passw = getpass.getpass('Github password: ')
 
     commits = orgRepoCommits(user,passw)
 
-    commits
-    print commits
+    c = Counter(range(1:7))
+
+    for i in commits.index
+        c
+        # days.append(datetime.date.isoweekday(i))
 
 
 
