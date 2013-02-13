@@ -26,3 +26,23 @@ def orgRepoCommits(user,passw,org='pythonkurs'):
 	commitHistory = DataFrame(data).transpose()
 
 	return commitHistory
+
+def WorkHabbits(commits):
+    import getpass, datetime
+    from collections import Counter
+
+
+    days = []
+    for i in commits.index:
+        day = i.strftime("%A")
+        days.append(day)
+    cd = Counter(days)
+
+    hours = []
+    for i in commits.index:
+        hours.append(datetime.datetime.time(i).hour)
+    ch = Counter(hours)
+
+    day = cd.most_common(2)
+    hour = ch.most_common(2)
+    return day, hour
