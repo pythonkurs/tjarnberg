@@ -2,6 +2,9 @@
 import requests
 from pandas import DataFrame, Series
 from dateutil import parser
+import getpass, datetime
+from collections import Counter
+
 
 def orgRepoCommits(user,passw,org='pythonkurs'):
 	"""
@@ -28,10 +31,7 @@ def orgRepoCommits(user,passw,org='pythonkurs'):
 	return commitHistory
 
 def WorkHabbits(commits):
-    import getpass, datetime
-    from collections import Counter
-
-
+    """Takes a DataFrame and returns most common day and hour"""
     days = []
     for i in commits.index:
         day = i.strftime("%A")
@@ -40,6 +40,25 @@ def WorkHabbits(commits):
 
     hours = []
     for i in commits.index:
+        hours.append(datetime.datetime.time(i).hour)
+    ch = Counter(hours)
+
+    day = cd.most_common(2)
+    hour = ch.most_common(2)
+    return day, hour
+
+def WorkHabbitUser(userData):
+    """Takes userdata and returns common commit day and hour"""
+
+    user = userData.dropna()
+    days = []
+    for i in user.index:
+        day = i.strftime("%A")
+        days.append(day)
+    cd = Counter(days)
+
+    hours = []
+    for i in user.index:
         hours.append(datetime.datetime.time(i).hour)
     ch = Counter(hours)
 
