@@ -36,8 +36,8 @@ class CourseRepo(object):
 
     def check(self):
         """PASSes if repo checks out, FAILs if it does not"""
-        for file in self.required:
-            if not os.path.exists(file):
+        for f in self.required:
+            if not os.path.exists(f):
                 return False
 
         return True
