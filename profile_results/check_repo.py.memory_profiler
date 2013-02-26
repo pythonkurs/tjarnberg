@@ -1,0 +1,20 @@
+Filename: scripts/check_repo.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+     7                             @profile
+     8     9.355 MB     0.000 MB   def main(argv):
+     9     9.363 MB     0.008 MB   	from tjarnberg.session3 import CourseRepo, repo_dir
+    10                             
+    11     9.367 MB     0.004 MB   	workDir = argv
+    12     9.371 MB     0.004 MB   	lastname = os.path.basename(os.path.normpath(workDir))
+    13     9.371 MB     0.000 MB   	repo = CourseRepo(lastname)
+    14                             
+    15                             
+    16     9.371 MB     0.000 MB   	with repo_dir(workDir):
+    17                             		if repo.check():
+    18                             			print "PASS"
+    19                             		else:
+    20                             			print "FAIL"
+
+

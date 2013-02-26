@@ -1,0 +1,21 @@
+Total number of outages = 31
+Repair status = 16
+Fraction = 0.516129032258
+
+Filename: scripts/getting_data.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+    11                             @profile
+    12     9.355 MB     0.000 MB   def main():
+    13     9.363 MB     0.008 MB       from tjarnberg.session2 import fetchNYCoutages
+    14     9.363 MB     0.000 MB       from tjarnberg.session2 import calcFracOutages
+    15                             
+    16    14.156 MB     4.793 MB       doc = fetchNYCoutages()
+    17    14.156 MB     0.000 MB       repairs, total = calcFracOutages(doc)
+    18                             
+    19    14.164 MB     0.008 MB       print "Total number of outages = "+str(total)
+    20    14.164 MB     0.000 MB       print "Repair status = "+str(repairs)
+    21    14.164 MB     0.000 MB       print "Fraction = "+str(float(repairs)/total)+"\n"
+
+
