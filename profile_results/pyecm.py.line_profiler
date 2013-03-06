@@ -1,0 +1,119 @@
+Timer unit: 1e-06 s
+
+File: scripts/pyecm.py
+Function: invert at line 76
+Total time: 4.0893 s
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    76                                                   @profile
+    77                                                   def invert(a, b):
+    78                                                           '''Computes the inverse of a modulo b. b must be odd.
+    79                                           
+    80                                           Returns the inverse of a (mod b).'''
+    81      4371         3706      0.8      0.1                  if a == 0 or b == 0:
+    82                                                                   return 0
+    83                                           
+    84      4371         2171      0.5      0.1                  truth = False
+    85      4371         2218      0.5      0.1                  if a < 0:
+    86                                                                   truth = True
+    87                                                                   a = -a
+    88                                           
+    89      4371         1953      0.4      0.0                  b_orig = b
+    90      4371         1971      0.5      0.0                  alpha = 1
+    91      4371         1888      0.4      0.0                  beta = 0
+    92                                           
+    93      8663         5965      0.7      0.1                  while not a & 1:
+    94      4292         2355      0.5      0.1                          if alpha & 1:
+    95      2464         1898      0.8      0.0                                  alpha += b_orig
+    96      4292         2872      0.7      0.1                          alpha >>= 1
+    97      4292         2482      0.6      0.1                          a >>= 1
+    98                                           
+    99      4371         2249      0.5      0.1                  if b > a:
+   100      4371         2184      0.5      0.1                          a, b = b, a
+   101      4371         2060      0.5      0.1                          alpha, beta = beta, alpha
+   102                                           
+   103    510345       287607      0.6      7.0                  while b != 0 and a != b:
+   104    505974       260998      0.5      6.4                          a -= b
+   105    505974       255193      0.5      6.2                          alpha -= beta
+   106                                           
+   107   1515711       823690      0.5     20.1                          while not a & 1:
+   108   1009737       544091      0.5     13.3                                  if alpha & 1:
+   109    504175       273375      0.5      6.7                                          alpha += b_orig
+   110   1009737       579192      0.6     14.2                                  alpha >>= 1
+   111   1009737       515436      0.5     12.6                                  a >>= 1
+   112                                                                   
+   113    505974       242812      0.5      5.9                          if b > a:
+   114    272032       132231      0.5      3.2                                  a,b = b,a
+   115    272032       121213      0.4      3.0                                  alpha, beta = beta, alpha
+   116                                           
+   117      4371         2191      0.5      0.1                  if a == b:
+   118      4371         2304      0.5      0.1                          a -= b
+   119      4371         2361      0.5      0.1                          alpha -= beta
+   120      4371         2154      0.5      0.1                          a, b = b, a
+   121      4371         2136      0.5      0.1                          alpha, beta = beta, alpha
+   122                                           
+   123      4371         2352      0.5      0.1                  if a != 1:
+   124         1            0      0.0      0.0                          return 0
+   125                                           
+   126      4370         2024      0.5      0.0                  if truth:
+   127                                                                   alpha = b_orig - alpha
+   128                                                           
+   129      4370         1968      0.5      0.0                  return alpha
+
+File: scripts/pyecm.py
+Function: double at line 431
+Total time: 57.7723 s
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+   431                                           @profile
+   432                                           def double(p, n):
+   433                                                   '''Doubles each point in the input list. Much like the add function, we take advantage of fast inversion.
+   434                                           
+   435                                           Returns the doubled list.'''
+   436      3052        19418      6.4      0.0          inv = range(len(p))
+   437                                           
+   438   4053099      1942896      0.5      3.4          for i in xrange(len(p)):
+   439   4050047      2597361      0.6      4.5                  inv[i] = p[i][1] << 1
+   440                                           
+   441      3052     31382308  10282.5     54.3          inv = parallel_invert(inv, n)
+   442                                           
+   443      3052         2892      0.9      0.0          if not isinstance(inv, list):
+   444                                                           return inv
+   445                                           
+   446   4053099      2046918      0.5      3.5          for i in xrange(len(p)):
+   447   4050047      2261177      0.6      3.9                  x = p[i][0]
+   448   4050047      3620406      0.9      6.3                  m = (x * x) % n
+   449   4050047      4681173      1.2      8.1                  m = ((m + m + m + p[i][2]) * inv[i]) % n
+   450   4050047      4333020      1.1      7.5                  p[i][0] = (m * m - x - x) % n
+   451   4050047      4883073      1.2      8.5                  p[i][1] = (m * (x - p[i][0]) - p[i][1]) % n
+   452                                           
+   453      3052         1665      0.5      0.0          return p
+
+File: scripts/pyecm.py
+Function: parallel_invert at line 538
+Total time: 30.2087 s
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+   538                                           @profile
+   539                                           def parallel_invert(l, n):
+   540                                                   '''Inverts all elements of a list modulo some number, using 3(n-1) modular multiplications and one inversion.
+   541                                           
+   542                                           Returns the list with all elements inverted modulo 3(n-1).'''
+   543      4371        18619      4.3      0.1          l_ = l[:]
+   544   5870494      2763882      0.5      9.1          for i in xrange(len(l)-1):
+   545   5866123      6004682      1.0     19.9                  l[i+1] = (l[i] * l[i+1]) % n
+   546                                                   
+   547      4371      7733959   1769.4     25.6          inv = invert(l[-1], n)
+   548      4371         2712      0.6      0.0          if inv == 0:
+   549         1          208    208.0      0.0                  return gcd(l[-1], n)
+   550                                           
+   551   5868960      2837822      0.5      9.4          for i in xrange(len(l)-1, 0, -1):
+   552   5864590      5663493      1.0     18.7                  l[i] = (inv * l[i-1]) % n
+   553   5864590      5178529      0.9     17.1                  inv = (inv * l_[i]) % n
+   554      4370         2502      0.6      0.0          l[0] = inv
+   555                                           
+   556      4370         2271      0.5      0.0          return l
+
