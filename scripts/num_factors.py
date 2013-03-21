@@ -49,12 +49,16 @@ def ipythonMP(m):
 
     
 if __name__ == "__main__":
+    ff = 500000
     if len(sys.argv) < 2 or sys.argv[1] == 's':
-        factors = serial(500000)
+        factors = serial(ff)
     elif sys.argv[1] == 'm':
-        factors = multiproc(500000)
+        factors = multiproc(ff)
     elif sys.argv[1] == 'i':
-        factors = ipythonMP(500000)
+        factors = ipythonMP(f)
+    else
+        print 'takes argument s (serial), m (multiprocessing) or i (IPythonMP)'
+        sys.exit(1)
 
     uniks = []
     for factor in factors:
